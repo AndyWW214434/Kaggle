@@ -1,4 +1,4 @@
-# Kaggle
+# Playground Calories Competition
 
 **📁 Dataset**  
 - Data provided by the Kaggle competition Playground Series - Season 5, Episode 5:
