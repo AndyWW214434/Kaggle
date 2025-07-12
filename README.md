@@ -1,62 +1,62 @@
 # Kaggle
 
 **📁 Dataset**  
-Data provided by the Kaggle competition Playground Series - Season 5, Episode 5:
+- Data provided by the Kaggle competition Playground Series - Season 5, Episode 5:
 
-train.csv – training data with target column Calories
+- train.csv – training data with target column Calories
 
-test.csv – test data to predict on
+- test.csv – test data to predict on
 
-sample_submission.csv – submission format
+- sample_submission.csv – submission format
 
 **🧹 Data Preprocessing**  
-Categorical encoding: Converted Sex to binary (0 = female, 1 = male).
+- Categorical encoding: Converted Sex to binary (0 = female, 1 = male).
 
-Removed the id column for modeling.
+- Removed the id column for modeling.
 
-Duplicate records were retained because they likely represent different individuals with similar measurements.
+- Duplicate records were retained because they likely represent different individuals with similar measurements.
 
-No missing values were present.
+- No missing values were present.
 
 **🏗️ Feature Engineering**  
-New features added to enhance model learning:
+- New features added to enhance model learning:
 
-BMI = Weight / (Height²)
+- BMI = Weight / (Height²)
 
-HR_Duration = Heart Rate × Duration
+- HR_Duration = Heart Rate × Duration
 
-Temp_Duration = Body Temp × Duration
+- Temp_Duration = Body Temp × Duration
 
-Age_Group = Binned age groups
+- Age_Group = Binned age groups
 
-Z-score normalization (_z) of Heart_Rate and Body_Temp within each age group
+- Z-score normalization (_z) of Heart_Rate and Body_Temp within each age group
 
-Effort = Weight × Duration
+- Effort = Weight × Duration
 
-temp_diff = Body Temperature − 37°C
+- temp_diff = Body Temperature − 37°C
 
 **⚙️ Modeling – PyTorch MLP**  
-A 3-layer Multilayer Perceptron (MLP) with ReLU activations.
+- A 3-layer Multilayer Perceptron (MLP) with ReLU activations.
 
-Loss function: Mean Squared Error (MSE)
+- Loss function: Mean Squared Error (MSE)
 
-Optimizer: Adam with learning rate 1e-3
+- Optimizer: Adam with learning rate 1e-3
 
-Early stopping is used to avoid overfitting, with a patience of 5 epochs.
+- Early stopping is used to avoid overfitting, with a patience of 5 epochs.
 
 **📊 Training**  
-Data split: 80% training, 20% validation
+- Data split: 80% training, 20% validation
 
-Features and targets were standardized using StandardScaler.
+- Features and targets were standardized using StandardScaler.
 
-The model achieved stable validation loss with early stopping triggered.
+- The model achieved stable validation loss with early stopping triggered.
 
 **🧪 Prediction**  
-Test data was processed with the same transformations as training data.
+- Test data was processed with the same transformations as training data.
 
-Predictions were inverse-transformed to return to the original Calories scale.
+- Predictions were inverse-transformed to return to the original Calories scale.
 
-Results were saved as submission2.csv.
+- Results were saved as submission2.csv.
 
 **📤 Submission Format**  
 csv
@@ -66,9 +66,10 @@ id,prediction
 0,27.604
 1,108.437
 ...
+  
 **✅ Dependencies**  
-numpy, pandas, seaborn, matplotlib
+- numpy, pandas, seaborn, matplotlib
 
-scikit-learn
+- scikit-learn
 
-torch, torchvision
+- torch, torchvision
