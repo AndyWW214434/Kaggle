@@ -60,12 +60,6 @@
 
 **📤 Submission Format**  
 csv
-Copy
-Edit
-id,prediction
-0,27.604
-1,108.437
-...
   
 **✅ Dependencies**  
 - numpy, pandas, seaborn, matplotlib
