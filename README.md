@@ -1,69 +1,74 @@
-# Playground Calories Competition
+# 🏋️‍♂️ Playground Calories Competition
 
-**📁 Dataset**  
-- Data provided by the Kaggle competition Playground Series - Season 5, Episode 5:
+This repository contains my solution for the **Playground Series - Season 5, Episode 5** hosted on Kaggle. The task involves predicting **Calories burned** based on biometric and activity data.
 
-  - train.csv – training data with target column Calories
+---
 
-  - test.csv – test data to predict on
+## 📁 Dataset
 
-  - sample_submission.csv – submission format
+- **Source**: Kaggle [Playground S5E5](https://www.kaggle.com/competitions/playground-series-s5e5/)
+- **Files**:
+  - `train.csv`: Training data with target variable `Calories`
+  - `test.csv`: Test set without labels
+  - `sample_submission.csv`: Required submission format
 
-**🧹 Data Preprocessing**  
-- Categorical encoding: Converted Sex to binary (0 = female, 1 = male).
+---
 
-- Removed the id column for modeling.
+## 🧹 Data Preprocessing
 
-- Duplicate records were retained because they likely represent different individuals with similar measurements.
+- **Categorical Encoding**: Converted `Sex` to binary (0 = Female, 1 = Male)
+- **Dropped**: `id` column (not useful for modeling)
+- **Duplicates**: Retained, assuming each row represents a distinct activity session
+- **Missing Values**: None found in the dataset
 
-- No missing values were present.
+---
 
-**🏗️ Feature Engineering**  
-- New features added to enhance model learning:
+## 🏗️ Feature Engineering
 
-  - BMI = Weight / (Height²)
+Engineered new features to improve model performance:
 
-  - HR_Duration = Heart Rate × Duration
+| Feature Name     | Description                                 |
+|------------------|---------------------------------------------|
+| `BMI`            | `Weight / (Height²)`                        |
+| `HR_Duration`    | `Heart_Rate × Duration`                     |
+| `Temp_Duration`  | `Body_Temp × Duration`                      |
+| `Age_Group`      | Age binned into discrete groups             |
+| `Heart_Rate_z`   | Z-score normalized Heart Rate (by age group)|
+| `Body_Temp_z`    | Z-score normalized Body Temp (by age group) |
+| `Effort`         | `Weight × Duration`                         |
+| `temp_diff`      | `Body_Temp − 37°C`                          |
 
-  - Temp_Duration = Body Temp × Duration
+---
 
-  - Age_Group = Binned age groups
+## ⚙️ Modeling – PyTorch MLP
 
-  - Z-score normalization (_z) of Heart_Rate and Body_Temp within each age group
+Built a **3-layer Multilayer Perceptron (MLP)** using PyTorch:
 
-  - Effort = Weight × Duration
+- **Architecture**: Dense layers with ReLU activations
+- **Loss Function**: Mean Squared Error (MSE)
+- **Optimizer**: Adam (learning rate = 1e-3)
+- **Training Strategy**: Early stopping with patience = 5 epochs
 
-  - temp_diff = Body Temperature − 37°C
+---
 
-**⚙️ Modeling – PyTorch MLP**  
-- A 3-layer Multilayer Perceptron (MLP) with ReLU activations.
+## 📊 Training Strategy
 
-  - Loss function: Mean Squared Error (MSE)
+- **Train/Validation Split**: 80% / 20%
+- **Scaling**: StandardScaler applied to features and target
+- **Outcome**: Achieved stable validation loss with early stopping
 
-  - Optimizer: Adam with learning rate 1e-3
+---
 
-  - Early stopping is used to avoid overfitting, with a patience of 5 epochs.
+## 🧪 Prediction & Submission
 
-**📊 Training**  
-- Data split: 80% training, 20% validation
+- Applied same transformations to `test.csv`
+- Predictions inverse-transformed to match original calorie scale
+- Output saved as: `submission2.csv`
 
-- Features and targets were standardized using StandardScaler.
+**Submission Format:**
 
-- The model achieved stable validation loss with early stopping triggered.
-
-**🧪 Prediction**  
-- Test data was processed with the same transformations as training data.
-
-- Predictions were inverse-transformed to return to the original Calories scale.
-
-- Results were saved as submission2.csv.
-
-**📤 Submission Format**  
-csv
-  
-**✅ Dependencies**  
-- numpy, pandas, seaborn, matplotlib
-
-- scikit-learn
-
-- torch, torchvision
+```csv
+id,Calories
+0,218.12
+1,178.63
+...
